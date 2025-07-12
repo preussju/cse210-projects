@@ -14,33 +14,47 @@ public class Journal
         foreach (Entry entry in _entries)
         {
             entry.DisplayEntry();
-            Console.WriteLine(); 
+            Console.WriteLine();
         }
     }
     public void SaveToFile(string filename)
     {
-        using (StreamWriter outputFile = new StreamWriter(filename))
+        string filePath = Path.Combine(Directory.GetCurrentDirectory(), filename); //construct the full file path
+        using (StreamWriter outputFile = new StreamWriter(filePath)) // not true to not duplicate
         {
             foreach (Entry entry in _entries)
             {
-                outputFile.WriteLine($"Date: {entry._date}~~ - Prompt: {entry._promptText} ~~{entry._entryText}");
+                if (entry._promptText != "Scripture of the day!") // checks if is not the convenant path file being saved
+                {
+                    outputFile.WriteLine($"{entry._date}~~{entry._promptText}~~{entry._entryText}");
+                }
             }
         }
+        SaveDailyScriptureToFile("scripture.txt"); // calls this function to save the convenant path files
     }
     public void LoadFromFile(string filename)
     {
-        if (File.Exists(filename))
+        string filePath = Path.Combine(Directory.GetCurrentDirectory(), filename); //construct the full file path
+        if (File.Exists(filePath))
         {
-            string[] lines = System.IO.File.ReadAllLines(filename);
-            foreach (string line in lines)
+            _entries.Clear(); //clear entries to not duplicate
+
+            using (StreamReader file = new StreamReader(filePath))
             {
-                string[] parts = line.Split("~~");
-            
-                Entry loadedEntry = new Entry();
-                loadedEntry._date = parts[0];
-                loadedEntry._promptText = parts[1];
-                loadedEntry._entryText = parts[2];
-                AddEntry(loadedEntry); // this is adding to _entries!
+                string line;
+                while ((line = file.ReadLine()) != null)
+                {
+                    string[] parts = line.Split("~~");
+
+                    if (parts.Length == 3) // Check if the line is a valid entry
+                    {
+                        Entry loadedEntry = new Entry();
+                        loadedEntry._date = parts[0];
+                        loadedEntry._promptText = parts[1];
+                        loadedEntry._entryText = parts[2];
+                        _entries.Add(loadedEntry);
+                    }
+                }
             }
         }
         else
@@ -48,4 +62,20 @@ public class Journal
             Console.WriteLine("File not found.");
         }
     }
+
+    public void SaveDailyScriptureToFile(string filename)  //new function very similar to SaveToFile
+    {
+        string filePath = Path.Combine(Directory.GetCurrentDirectory(), filename);
+        using (StreamWriter outputFile = new StreamWriter(filePath, true)) // true to not erase 
+        {
+            foreach (Entry entry in _entries)
+            {
+                if (entry._promptText == "Scripture of the day!")
+                {
+                    outputFile.WriteLine($"{entry._date}~~{entry._promptText}~~{entry._entryText}");
+                }
+            }
+        }
+    }
+
 }

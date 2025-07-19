@@ -27,11 +27,11 @@ public class Reference
     {
         if (_endVerse > 0)
         {
-            return $"{_book} {_chapter}:{_verse}-{_endVerse}";
+            return $"{_book} {_chapter}:{_verse}-{_endVerse}"; // if there is more than 1 verse
         }
         else
         {
-            return $"{_book} {_chapter}:{_verse}";
+            return $"{_book} {_chapter}:{_verse}"; // if there is only 1 verse 
         } 
     }
 }

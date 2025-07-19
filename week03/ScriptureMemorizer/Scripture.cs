@@ -6,19 +6,19 @@ public class Scripture
 
     public Scripture(Reference reference, string text)
     {
-        _reference = reference;
-        _words = new List<Word>();
+        _reference = reference; // gets the value for the reference
+        _words = new List<Word>(); //creates a new list
 
-        string[] parts = text.Split(' ');
+        string[] parts = text.Split(' '); //splits the text by the space " "
         foreach (string word in parts)
         {
-            _words.Add(new Word(word));
+            _words.Add(new Word(word)); // adds each split word to the list
         }
     }
 
     public void HideRandomWords(int numberToHide)
     {
-        Random random = new Random();
+        Random random = new Random();  // choose a random word to hide text
         for (int i = 0; i < numberToHide; i++)
         {
             int index = random.Next(_words.Count);
@@ -27,7 +27,7 @@ public class Scripture
             {
                 index = random.Next(_words.Count);
             }
-            _words[index].Hide();
+            _words[index].Hide(); // hides the chosen word 
         }
     }
 
@@ -36,21 +36,22 @@ public class Scripture
         string text = "";
         foreach (Word word in _words)
         {
-            text += word.GetDisplayText()+" ";
+            text += word.GetDisplayText()+" "; // prints each word in the list with an space
         }
-        return text.Trim();
+
+        Console.Write(_reference.GetDisplayText()); // displays the reference
+        return " " + text.Trim(); // display the text with the _ words besides the reference 
     }
 
-    public bool IsCompletelyHidden()
+    public bool IsCompletelyHidden() //if it is completely hidden closes the program
     {
-        foreach (Word word in _words)
+        foreach (Word word in _words) //checks if each word in the text is hidden
         {
             if (!word.IsHidden())
             {
-                return false;
+                return false; //returns false if there is a word still
             }
         }
         return true;
-        
     }
 }

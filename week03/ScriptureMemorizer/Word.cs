@@ -7,7 +7,7 @@ public class Word
 
     public Word(string text)
     {
-        _text = text;
+        _text = text; 
         _isHidden = false; // set to show word 
     }
 
@@ -26,9 +26,9 @@ public class Word
         return _isHidden; 
     }
 
-    public string GetDisplayText()
+    public string GetDisplayText() //displays the new text with the _ chosen word  
     {
-        if (_isHidden) // if is true
+        if (_isHidden) 
         {
             string word = "";
             for (int i = 0; i < _text.Length; i++) // _ per character in word 

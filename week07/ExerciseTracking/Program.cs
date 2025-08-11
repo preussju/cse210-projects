@@ -4,6 +4,19 @@ class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello World! This is the ExerciseTracking Project.");
+        RunningActivity running = new RunningActivity("08 AGO 2025", 30, 4.8d);
+        SwimmingActivity swimming = new SwimmingActivity("08 AGO 2025", 30, 10d);
+        CyclingActivity cycling = new CyclingActivity("08 AGO 2025", 30, 12d);
+
+        List<Activity> activities = new List<Activity>();
+        activities.Add(running);
+        activities.Add(swimming);
+        activities.Add(cycling);
+
+        foreach (Activity act in activities)
+        {
+            Console.WriteLine(act.GetSummary());
+        }
+
     }
 }

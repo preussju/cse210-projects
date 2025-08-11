@@ -1,4 +1,0 @@
-0
-SimpleGoal~~church~~go to church~~10~~False
-EternalGoal~~eternal~~goal~~10
-ChecklistGoal~~check~~the list~~10~~2~~3~~100
